@@ -19,13 +19,13 @@ See https://aka.ms/azure-adventure-day
 ### Azure Resources and Quotas 
 |Azure Service  |SKU  |Annotations  |
 |---------|---------|---------|
-|Application Insights & LogAnalyticsWorkspace   |  Pay-as-you-go       |         |
-|Container Apps Environment     | Consumption Only |         |
-|Container App     | Consumption Only | Initial deployment with redis container. Will container phase containers later as well. |
-|Container registry     |  Standard |         |
-|Azure OpenAI | Standard | Access to the following models is neccessary: gpt-4o, text-embedding-ada-002 |
+|Application Insights & Log Analytics workspace   |  Pay-as-you-go  | Will be used for monitoring and debugging. |
+|Container Apps Environment     | Consumption Only | Will be used to host Container Apps with application code. |
+|Container App     | Consumption Only | Initial deployment with redis container. More Container Apps are added later during the phase configuration.  |
+|Container registry     |  Standard | Stores container images. |
+|Azure OpenAI | Standard | Access to LLM models. The following models will be deployed: gpt-4o, text-embedding-ada-002 |
 |Managed Identity     |  User assigned managed Identity | Contains permissions for Container Registry, Azure AI Search and AI Services  |
-|Azure AI Search     |  Standard | 1 search unit |
+|Azure AI Search     |  Standard | Setup with 1 search unit. Well be used for RAG challenge. |
 
 ### Available Regions
 
