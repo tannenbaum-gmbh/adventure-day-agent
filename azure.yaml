@@ -8,9 +8,13 @@ hooks:
       continueOnError: false
       interactive: true
       run: azd-hooks/post-provision.sh
-  postdeploy: # Pull environment variable inline from local device and set in .env file
-      shell: sh
-      run: cp .azure/$AZURE_ENV_NAME/.env ./
+  postdeploy: 
+      # Pull environment variable inline from local device and set in .env file
+      - shell: sh
+        run: cp .azure/$AZURE_ENV_NAME/.env ./
+      # Run the healthcheck script
+      - shell: sh
+        run: python azd-hooks/healthcheck.py
 # services:
   # phase1:
   #   project: ./src-agents/phase1
