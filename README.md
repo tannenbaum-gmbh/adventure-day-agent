@@ -16,6 +16,19 @@ See https://aka.ms/azure-adventure-day
 
 ## Quickstart & Infrastructure setup
 
+### Azure Resources and Quotas 
+|Azure Service  |SKU  |Annotations  |
+|---------|---------|---------|
+|Application Insights & LogAnalyticsWorkspace   |  Pay-as-you-go       |         |
+|Container Apps Environment     | Consumption Only |         |
+|Container App     | Consumption Only | Initial deployment with redis container. Will container phase containers later as well. |
+|Container registry     |  Standard |         |
+|Azure OpenAI | Standard | Access to the following models is neccessary: gpt-4o, text-embedding-ada-002 |
+|Managed Identity     |  User assigned managed Identity | Contains permissions for Container Registry, Azure AI Search and AI Services  |
+|Azure AI Search     |  Standard | 1 search unit |
+
+### Available Regions
+
 Regions that this deployment can be executed:
 - northcentralus
 - swedencentral
