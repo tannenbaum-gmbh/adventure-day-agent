@@ -18,7 +18,7 @@ class bcolors:
 
 def error_report(message):
     print("["+bcolors.FAIL + "ERROR"+bcolors.ENDC+"] "+message)
-    print(error_message)
+    print("The validation has encountered an error. Please check the output above for more details. \n If you want to rerun the check execute \"python azd-hooks/healthcheck.py\"")
     exit(1)
 
 def success_report(message):
@@ -26,17 +26,13 @@ def success_report(message):
 
 print("Running healthcheck of deployed resources...")
 
-error_message="The validation has encountered an error. Please check the output above for more details. \n If you want to rerun the check execute \"python azd-hooks/healthcheck.py\""
-
 # Check if the OpenAI API is reachable
 print("Checking if OpenAI API is reachable...")
 try:
     requests.get(os.getenv("AZURE_OPENAI_ENDPOINT") + "/status-0123456789abcdef")
 except Exception as e:
     error_report("OpenAI API cannot be reached or is inoperational. Details: " + str(e))
-
 success_report("OpenAI API is reachable.")
-
 
 # Check completion model operability
 print("Checking if OpenAI completion model is operational...")
