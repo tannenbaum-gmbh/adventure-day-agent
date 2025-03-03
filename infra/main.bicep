@@ -1,4 +1,4 @@
-targetScope = 'subscription'
+targetScope = 'resourceGroup'
 
 @minLength(1)
 @maxLength(64)
@@ -10,7 +10,6 @@ param environmentName string
 @allowed(['northcentralus','swedencentral', 'eastus2', 'westus3'])
 param location string
 
-param resourceGroupName string = ''
 param containerAppsEnvironmentName string = ''
 param containerRegistryName string = ''
 param openaiName string = ''
@@ -51,17 +50,10 @@ param modelDeployments array = [
   }
 ]
 
-// Organize resources in a resource group
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: !empty(resourceGroupName) ? resourceGroupName : '${abbrs.resourcesResourceGroups}${environmentName}'
-  location: location
-  tags: tags
-}
 
 // Container apps host (including container registry)
 module containerApps './core/host/container-apps.bicep' = {
   name: 'container-apps'
-  scope: resourceGroup
   params: {
     name: 'app'
     containerAppsEnvironmentName: !empty(containerAppsEnvironmentName) ? containerAppsEnvironmentName : '${abbrs.appManagedEnvironments}${resourceToken}'
@@ -74,7 +66,6 @@ module containerApps './core/host/container-apps.bicep' = {
 // Phase 1 Container App
 module phase1 './app/phase1.bicep' = {
   name: 'phase1'
-  scope: resourceGroup
   params: {
     name: !empty(apiContainerAppName) ? apiContainerAppName : '${abbrs.appContainerApps}api-${resourceToken}'
     location: location
@@ -97,7 +88,6 @@ module phase1 './app/phase1.bicep' = {
 // Azure OpenAI Model
 module openai './ai/openai.bicep' = {
   name: 'openai'
-  scope: resourceGroup
   params: {
     location: location
     tags: tags
@@ -111,7 +101,6 @@ module openai './ai/openai.bicep' = {
 // Azure AI Search
 module search './ai/search.bicep' = {
   name: 'search'
-  scope: resourceGroup
   params: {
     location: location
     tags: tags
@@ -122,7 +111,6 @@ module search './ai/search.bicep' = {
 // Monitor application with Azure Monitor
 module monitoring './core/monitor/monitoring.bicep' = {
   name: 'monitoring'
-  scope: resourceGroup
   params: {
     location: location
     tags: tags
@@ -134,7 +122,7 @@ module monitoring './core/monitor/monitoring.bicep' = {
 
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
-output AZURE_RESOURCE_GROUP string = resourceGroup.name
+output AZURE_RESOURCE_GROUP string = resourceGroup().name
 
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
 output APPLICATIONINSIGHTS_NAME string = monitoring.outputs.applicationInsightsName
