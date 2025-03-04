@@ -30,7 +30,7 @@ param completionModelVersion string = '2024-08-06'
 param embeddingDeploymentModelName string = 'text-embedding-ada-002'
 param embeddingModelName string = 'text-embedding-ada-002'
 param openaiApiVersion string = '2024-02-01'
-param openaiCapacity int = 50
+param openaiCapacity int = 30
 param modelDeployments array = [
   {
     name: completionDeploymentModelName
