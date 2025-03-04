@@ -43,10 +43,10 @@ The following lines of code will connect your Codespace az cli and azd cli to th
 
 ```
 # log in with the provided credentials - OPEN A PRIVATE BROWSER SESSION
-az login --use-device-code
+az login --tenant <your_teanant_id> --use-device-code
 
 # "log into azure dev cli - only once" - OPEN A PRIVATE BROWSER SESSION
-azd auth login --use-device-code
+azd auth login --tenant-id <your_teanant_id> --use-device-code
 
 # press enter open up https://microsoft.com/devicelogin and enter the code
 
